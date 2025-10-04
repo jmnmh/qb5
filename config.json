@@ -1,5 +1,5 @@
 {
-  "api": "https://jmnmh.github.io/qb5V1",
+  "api": "https://jmnmh.github.io/qb5V1/config.json",
   "login_api": "https://jmnmh.github.io/qb5V1/api/login",
   "version": "1.0.0",
   "update_url": "https://jmnmh.github.io/qb5V1/api/update",
@@ -40,3 +40,4 @@
     "additional_params": {}
   }
 }
+
