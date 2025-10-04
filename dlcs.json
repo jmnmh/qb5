@@ -1,0 +1,14 @@
+[
+  {
+    "id": "dlc1",
+    "title": "Expansion Pack 1",
+    "description": "إضافة جديدة تحتوي مهام جديدة",
+    "downloadLink": "https://example.com/dlc1.zip"
+  },
+  {
+    "id": "dlc2",
+    "title": "Skin Pack",
+    "description": "حزمة مظهر للشخصيات",
+    "downloadLink": "https://example.com/dlc2.zip"
+  }
+]
