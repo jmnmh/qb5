@@ -1,9 +1,1 @@
-{
-  "version": "1.2.0",
-  "patchNotes": [
-    "تم إصلاح مشكلة تسجيل الدخول",
-    "تحسينات في واجهة المستخدم",
-    "إضافة خاصية التحديث التلقائي"
-  ],
-  "downloadLink": "https://discord.gg/fmrzYAKHXG"
-}
+{ "version": "1.0.0", "release_date": "2025-04-05", "notes": "Initial release." }
