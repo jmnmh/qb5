@@ -1,6 +1,34 @@
 {
+  "generatedAt": "2025-10-04T00:00:00Z",
+  "count": 4,
   "codes": [
-    "QP52-1234-ABCD",
-    "QP52-5678-EFGH"
+    {
+      "code": "QP52-AB12-CD34",
+      "type": "free",
+      "notes": "free-trial",
+      "expires": null,
+      "used": false
+    },
+    {
+      "code": "QP52-EF56-GH78",
+      "type": "paid",
+      "notes": "lifetime",
+      "expires": null,
+      "used": false
+    },
+    {
+      "code": "QP52-IJ90-KL12",
+      "type": "paid",
+      "notes": "promo-2025",
+      "expires": "2025-12-31T23:59:59Z",
+      "used": false
+    },
+    {
+      "code": "QP52-MN34-OP56",
+      "type": "free",
+      "notes": "beta",
+      "expires": null,
+      "used": false
+    }
   ]
 }
