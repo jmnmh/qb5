@@ -5101,7 +5101,44 @@ html, body {
     if (currentActive && currentActive.getAttribute('data-page') === pageId) {
         return; // Don't navigate if already on this page
     }
-    
+
+
+<div id="games-container">
+  <!-- ستُعرض الألعاب هنا -->
+</div>
+
+<script>
+  async function loadGames() {
+    const container = document.getElementById('games-container');
+    container.innerHTML = 'جاري تحميل الألعاب...';
+
+    try {
+      const response = await fetch('https://jmnmh.github.io/qb5V1/games.json');
+      const games = await response.json();
+      container.innerHTML = ''; // امسح الرسالة
+
+      games.forEach(g => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+          <img src="${g.thumbnail}" alt="${g.title}" style="width:100px;height:100px;">
+          <h3>${g.title}</h3>
+          <p>${g.description}</p>
+          <a href="${g.downloadLink}" target="_blank">تحميل</a>
+        `;
+        container.appendChild(card);
+      });
+    } catch (err) {
+      container.innerHTML = 'فشل تحميل الألعاب.';
+      console.error(err);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadGames);
+</script>
+
+
+            
     // Update active nav item
     document.querySelectorAll('.nav-item').forEach(navItem => {
         navItem.classList.remove('active');
