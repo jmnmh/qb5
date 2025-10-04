@@ -1,8 +1,8 @@
 {
-  "api": "https://jmnmh.github.io/qb5V1",
-  "login_api": "https://jmnmh.github.io/qb5V1/login.json",
+  "api": "https://yourname.github.io/swa-data",
+  "login_api": "https://yourname.github.io/swa-data/login.json",
   "version": "1.0.0",
-  "update_url": "https://jmnmh.github.io/qb5V1/Update.json",
+  "update_url": "https://yourname.github.io/swa-data/update.json",
   "steam_url": "https://store.steampowered.com/",
   "ui": {
     "local": 1,
@@ -17,7 +17,7 @@
     "game_fetch": "/games.json",
     "file_download": "",
     "get_file": "",
-    "patch_notes": "/Update.json",
+    "patch_notes": "/update.json",
     "version": "/config.json",
     "socials": "",
     "launchers": "",
