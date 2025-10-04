@@ -1,14 +1,12 @@
 [
   {
-    "id": "dlc1",
-    "title": "Expansion Pack 1",
-    "description": "إضافة جديدة تحتوي مهام جديدة",
+    "title": "DLC 1 - Winter Expansion",
+    "description": "A new snowy map with 3 new missions.",
     "downloadLink": "https://example.com/dlc1.zip"
   },
   {
-    "id": "dlc2",
-    "title": "Skin Pack",
-    "description": "حزمة مظهر للشخصيات",
+    "title": "DLC 2 - Weapons Pack",
+    "description": "Adds 5 new weapons.",
     "downloadLink": "https://example.com/dlc2.zip"
   }
 ]
