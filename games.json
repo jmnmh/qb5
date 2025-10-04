@@ -1,9 +1,29 @@
-[
-  {
-    "id": 5,
-    "name": "Game 5 Test",
-    "genre": ["Action"],
-    "image": "https://via.placeholder.com/300?text=Game+5",
-    "download_url": "fares.top.zip"
-  }
-]
+public static async Task<GameInfo> GetGameFromSteamAsync(int appId)
+{
+    try
+    {
+        var client = new HttpClient();
+        var url = $"https://store.steampowered.com/api/appdetails?appids={appId}";
+        var json = await client.GetStringAsync(url);
+
+        var response = JsonConvert.DeserializeObject<Dictionary<string, AppDetailResponse>>(json);
+        if (response.TryGetValue(appId.ToString(), out var detail) && detail.success)
+        {
+            var data = detail.data;
+            return new GameInfo
+            {
+                Id = appId,
+                Name = data.name,
+                Image = data.header_image,
+                Genres = data.genres?.Select(g => g.description).ToArray() ?? new string[0],
+                SteamUrl = $"https://store.steampowered.com/app/{appId}/",
+                DownloadUrl = "" // لأن ألعاب Steam ما تتحملش من خارج المتجر
+            };
+        }
+    }
+    catch (Exception ex)
+    {
+        File.AppendAllText(@"C:\GFK\errorlog.txt", $"{DateTime.Now}: Steam API error for {appId}: {ex.Message}{Environment.NewLine}");
+    }
+    return null;
+}
