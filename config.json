@@ -1,43 +1,217 @@
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
+namespace SWA
 {
-  "api": "https://jmnmh.github.io/qb5V1/config.json",
-  "login_api": "https://jmnmh.github.io/qb5V1/api/login",
-  "version": "1.0.0",
-  "update_url": "https://jmnmh.github.io/qb5V1/api/update",
-  "steam_url": "https://store.steampowered.com/",
-  
-  "ui": {
-    "local": 0,
-    "paths": {
-      "login": "/ui/login.html",
-      "dashboard": "/ui/dashboard.html",
-      "css": "/ui/css/",
-      "js": "/ui/js/"
+    public class ApiConfigManager
+    {
+        private static readonly HttpClient client = new HttpClient();
+
+        // رابط ملف الإعدادات JSON على GitHub Pages
+        private static readonly string configUrl = "https://jmnmh.github.io/qb5V1/config.json";
+
+        private static ApiConfiguration _config;
+
+        public static ApiConfiguration Config => _config;
+
+        public static async Task<ApiConfiguration> LoadConfigurationAsync()
+        {
+            try
+            {
+                string json = await client.GetStringAsync(configUrl);
+                _config = JsonConvert.DeserializeObject<ApiConfiguration>(json);
+
+                File.AppendAllText(@"C:\GFK\errorlog.txt", $"{DateTime.Now}: Loaded API configuration from {configUrl}{Environment.NewLine}");
+                File.AppendAllText(@"C:\GFK\errorlog.txt", $"{DateTime.Now}: API URL: {_config?.Api ?? "null"}{Environment.NewLine}");
+
+                return _config;
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(@"C:\GFK\errorlog.txt", $"{DateTime.Now}: Error loading API configuration: {ex.Message}{Environment.NewLine}");
+
+                // الإعدادات الافتراضية مع رابط Api صحيح (رابط قاعدة فقط)
+                _config = new ApiConfiguration
+                {
+                    Api = "https://jmnmh.github.io/qb5V1/config.json",  // الرابط الأساسي للـ API (ملفات ثابتة في هذه الحالة)
+                    LoginApi = "https://jmnmh.github.io/qb5V1/login",
+                    UpdateUrl = "https://jmnmh.github.io/qb5V1/Update",
+                    SteamUrl = "https://store.steampowered.com/",
+                    Ui = new UiConfiguration
+                    {
+                        Local = 1,
+                        Paths = new UiPaths
+                        {
+                            Login = "/login",
+                            Dashboard = "/dashboard",
+                            Css = "/css/",
+                            Js = "/js/"
+                        }
+                    },
+                    ApiEndpoints = new ApiEndpoints
+                    {
+                        GameFetch = "/api/v3/fetch/",
+                        FileDownload = "/api/v3/file/",
+                        GetFile = "/api/v3/get/",
+                        PatchNotes = "/api/v3/patch_notes/",
+                        Version = "/api/v3/version/",
+                        Socials = "/api/v3/socials/",
+                        Launchers = "/api/v3/launchers/",
+                        Heartbeat = "/api/v3/heartbeat"
+                    },
+                    Maintenance = new MaintenanceInfo
+                    {
+                        Scheduled = "false",
+                        StartTime = "",
+                        EndTime = "",
+                        Message = ""
+                    },
+                    Heartbeat = new HeartbeatConfig
+                    {
+                        Enabled = true,
+                        IntervalMs = 60000,
+                        EnabledForGuests = true,
+                        AdditionalParams = new Dictionary<string, string>()
+                    }
+                };
+
+                return _config;
+            }
+        }
+
+        // تركيب رابط الموارد الخاصة بالواجهة
+        public static string GetUIPath(string resource)
+        {
+            if (_config == null)
+                throw new InvalidOperationException("Configuration not loaded. Call LoadConfigurationAsync first.");
+
+            if (_config.Ui != null && _config.Ui.Local == 1)
+            {
+                string appPath = System.Windows.Forms.Application.StartupPath;
+                return Path.Combine(appPath, "UI", resource);
+            }
+            else
+            {
+                // تركيب الرابط الكامل بناءً على Api الأساسي والمسار المطلوب
+                return $"{_config.Api.TrimEnd('/')}{resource}";
+            }
+        }
     }
-  },
 
-  "api_endpoints": {
-    "game_fetch": "/api/v3/fetch",
-    "file_download": "/api/v3/file",
-    "get_file": "/api/v3/get",
-    "patch_notes": "/api/v3/patch_notes",
-    "version": "/api/v3/version",
-    "socials": "/api/v3/socials",
-    "launchers": "/api/v3/launchers",
-    "heartbeat": "/api/v3/heartbeat"
-  },
+    // باقي الكلاسات كما هي (ApiConfiguration، UiConfiguration، ApiEndpoints ... إلخ)
 
-  "maintenance": {
-    "scheduled": "false",
-    "start_time": "",
-    "end_time": "",
-    "message": ""
-  },
+    public class ApiConfiguration
+    {
+        [JsonProperty("api")]
+        public string Api { get; set; }
 
-  "heartbeat": {
-    "enabled": true,
-    "interval_ms": 60000,
-    "enabled_for_guests": true,
-    "additional_params": {}
-  }
+        [JsonProperty("login_api")]
+        public string LoginApi { get; set; }
+
+        [JsonProperty("version")]
+        public string Version { get; set; }
+
+        [JsonProperty("update_url")]
+        public string UpdateUrl { get; set; }
+
+        [JsonProperty("steam_url")]
+        public string SteamUrl { get; set; }
+
+        [JsonProperty("ui")]
+        public UiConfiguration Ui { get; set; }
+
+        [JsonProperty("api_endpoints")]
+        public ApiEndpoints ApiEndpoints { get; set; }
+
+        [JsonProperty("maintenance")]
+        public MaintenanceInfo Maintenance { get; set; }
+
+        [JsonProperty("heartbeat")]
+        public HeartbeatConfig Heartbeat { get; set; }
+    }
+
+    public class UiConfiguration
+    {
+        [JsonProperty("local")]
+        public int Local { get; set; }
+
+        [JsonProperty("paths")]
+        public UiPaths Paths { get; set; }
+    }
+
+    public class UiPaths
+    {
+        [JsonProperty("login")]
+        public string Login { get; set; }
+
+        [JsonProperty("dashboard")]
+        public string Dashboard { get; set; }
+
+        [JsonProperty("css")]
+        public string Css { get; set; }
+
+        [JsonProperty("js")]
+        public string Js { get; set; }
+    }
+
+    public class ApiEndpoints
+    {
+        [JsonProperty("game_fetch")]
+        public string GameFetch { get; set; }
+
+        [JsonProperty("file_download")]
+        public string FileDownload { get; set; }
+
+        [JsonProperty("get_file")]
+        public string GetFile { get; set; }
+
+        [JsonProperty("patch_notes")]
+        public string PatchNotes { get; set; }
+
+        [JsonProperty("version")]
+        public string Version { get; set; }
+
+        [JsonProperty("socials")]
+        public string Socials { get; set; }
+
+        [JsonProperty("launchers")]
+        public string Launchers { get; set; }
+
+        [JsonProperty("heartbeat")]
+        public string Heartbeat { get; set; }
+    }
+
+    public class MaintenanceInfo
+    {
+        [JsonProperty("scheduled")]
+        public string Scheduled { get; set; }
+
+        [JsonProperty("start_time")]
+        public string StartTime { get; set; }
+
+        [JsonProperty("end_time")]
+        public string EndTime { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
+    }
+
+    public class HeartbeatConfig
+    {
+        [JsonProperty("enabled")]
+        public bool Enabled { get; set; } = true;
+
+        [JsonProperty("interval_ms")]
+        public int IntervalMs { get; set; } = 60000;
+
+        [JsonProperty("enabled_for_guests")]
+        public bool EnabledForGuests { get; set; } = true;
+
+        [JsonProperty("additional_params")]
+        public Dictionary<string, string> AdditionalParams { get; set; } = new Dictionary<string, string>();
+    }
 }
-
