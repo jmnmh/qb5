@@ -1,13 +1,7 @@
 {
-  "servers": [
-    {
-      "name": "Server 1",
-      "status": "online",
-      "players": 25
-    }
-  ],
   "features": [
-    "Chat",
-    "Leaderboards"
+    "Multiplayer matchmaking",
+    "Online leaderboards",
+    "Cross-platform play"
   ]
 }
