@@ -1,20 +1,9 @@
 {
-  "api": "https://jmnmh.github.io/qb5V1",
-  "login_api": "https://jmnmh.github.io/qb5V1/login.json",
-  "version": "1.0.0",
-  "update_url": "https://jmnmh.github.io/qb5V1/Update.json",
-  "steam_url": "https://store.steampowered.com/",
-  "ui": { "local": 1, "paths": { "login": "/login", "dashboard": "/dashboard", "css": "/css/", "js": "/js/" } },
-  "api_endpoints": {
-    "game_fetch": "/games.json",
-    "file_download": "",
-    "get_file": "",
-    "patch_notes": "/Update.json",
-    "version": "/config.json",
-    "socials": "",
-    "launchers": "",
-    "heartbeat": ""
-  },
-  "maintenance": { "scheduled": "false", "start_time": "", "end_time": "", "message": "" },
-  "heartbeat": { "enabled": true, "interval_ms": 60000, "enabled_for_guests": true, "additional_params": {} }
+  "api": "https://swacloud.com/api/v3/",
+  "games": "https://swacloud.com/api/v3/fetch/",
+  "files": "https://swacloud.com/api/v3/file/",
+  "images": "https://swacloud.com/api/v3/images/",
+  "version": "2.0.0",
+  "update_url": "https://swacloud.com/api/v3/update/",
+  "news": "https://swacloud.com/api/v3/news/"
 }
