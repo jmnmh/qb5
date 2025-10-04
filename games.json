@@ -1,14 +1,9 @@
 [
   {
-    "title": "لعبة 1",
-    "description": "وصف اللعبة 1",
-    "thumbnail": "https://example.com/img1.jpg",
-    "downloadLink": "https://swacloud.com/gamelist"
-  },
-  {
-    "title": "لعبة 2",
-    "description": "وصف اللعبة 2",
-    "thumbnail": "https://example.com/img2.jpg",
-    "downloadLink": "https://swacloud.com/gamelist"
+    "id": 5,
+    "name": "Game 5 Test",
+    "genre": ["Action"],
+    "image": "https://via.placeholder.com/300?text=Game+5",
+    "download_url": "https://example.com/game5.zip"
   }
 ]
