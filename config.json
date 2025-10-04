@@ -1,0 +1,38 @@
+{
+  "api": "https://username.github.io/my-api-config",
+  "login_api": "https://username.github.io/my-api-config/login",
+  "version": "1.0.0",
+  "update_url": "https://username.github.io/my-api-config/update",
+  "steam_url": "https://store.steampowered.com/",
+  "ui": {
+    "local": 0,
+    "paths": {
+      "login": "/login",
+      "dashboard": "/dashboard",
+      "css": "/css/",
+      "js": "/js/"
+    }
+  },
+  "api_endpoints": {
+    "game_fetch": "/api/v1/fetch",
+    "file_download": "/api/v1/file/download",
+    "get_file": "/api/v1/file/get",
+    "patch_notes": "/api/v1/patch_notes",
+    "version": "/api/v1/version",
+    "socials": "/api/v1/socials",
+    "launchers": "/api/v1/launchers",
+    "heartbeat": "/api/v1/heartbeat"
+  },
+  "maintenance": {
+    "scheduled": "false",
+    "start_time": "",
+    "end_time": "",
+    "message": ""
+  },
+  "heartbeat": {
+    "enabled": true,
+    "interval_ms": 60000,
+    "enabled_for_guests": true,
+    "additional_params": {}
+  }
+}
